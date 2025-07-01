@@ -8,13 +8,9 @@ from asteroidfield import AsteroidField
 
 
 def main():
-    print("Starting Asteroids!")
-    print(f"Screen width: {SCREEN_WIDTH}")
-    print(f"Screen height: {SCREEN_HEIGHT}")
-
     pygame.init()
     clock = pygame.time.Clock()
-    dt = 0
+    time_delta = 0
 
     asteroids = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
@@ -43,7 +39,7 @@ def main():
     
         screen.fill("black")
 
-        updateable.update(dt)
+        updateable.update(time_delta)
 
         for asteroid in asteroids:
             if asteroid.collision(player):
@@ -51,7 +47,7 @@ def main():
                 sys.exit(0)
             for shot in shots:
                 if asteroid.collision(shot):
-                    asteroid.kill()
+                    asteroid.split()
                     shot.kill()
 
         for obj in drawable:
@@ -60,7 +56,7 @@ def main():
 
         pygame.display.flip()
         
-        dt = clock.tick(60) / 1000
+        time_delta = clock.tick(60) / 1000
 
 if __name__ == "__main__":
     main()
